@@ -407,7 +407,9 @@ No additional parameters required
 `ALLOWED_HOSTS= .localhost, .herokuapp.com`
 
 2. Change the SECRET_KEY to the project secret key.
-3. Enter the postgres database details on heroku.
+
+3. Enter the postgres database details on heroku or create a database locally and enter the database details.
+
 4. And you will be good to go.
 
 

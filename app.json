@@ -23,7 +23,7 @@
       "required": true
     },
     "ALLOWED_HOSTS": {
-      "value": "*"
+      "required": true
     }
   },
   "formation": {

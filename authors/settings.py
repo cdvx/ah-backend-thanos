@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'authors.apps.authentication',
     'authors.apps.core',
     'authors.apps.profiles',
+    'rest_framework_swagger'
 ]
 
 MIDDLEWARE = [

@@ -391,6 +391,23 @@ No additional parameters required
 
 `GET /api/tags`
 
+### Instructions on using the .env file.
+1. Create a file in the root directory called .env and enter the data below.
 
+`SECRET_KEY=s3cr3t`
+
+`DB_NAME= db_name`
+
+`DB_USER= db_user`
+
+`DB_PASSWORD= db_password`
+
+`DB_HOST= db_host`
+
+`ALLOWED_HOSTS= .localhost, .herokuapp.com`
+
+2. Change the SECRET_KEY to the project secret key.
+3. Enter the postgres database details on heroku.
+4. And you will be good to go.
 
 

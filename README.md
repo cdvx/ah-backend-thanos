@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/andela/ah-backend-thanos.svg?branch=develop)](https://travis-ci.org/andela/ah-backend-thanos)
 
+[![Coverage Status](https://coveralls.io/repos/github/andela/ah-backend-thanos/badge.svg?branch=develop)](https://coveralls.io/github/andela/ah-backend-thanos?branch=develop)
+
 Authors Haven - A Social platform for the creative at heart.
 =======
 
@@ -393,6 +395,25 @@ No additional parameters required
 
 `GET /api/tags`
 
+### Instructions on using the .env file.
+1. Create a file in the root directory called .env and enter the data below.
 
+`SECRET_KEY=s3cr3t`
+
+`DB_NAME= db_name`
+
+`DB_USER= db_user`
+
+`DB_PASSWORD= db_password`
+
+`DB_HOST= db_host`
+
+`ALLOWED_HOSTS= .localhost, .herokuapp.com`
+
+2. Change the SECRET_KEY to the project secret key.
+
+3. Enter the postgres database details on heroku or create a database locally and enter the database details.
+
+4. And you will be good to go.
 
 

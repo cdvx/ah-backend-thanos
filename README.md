@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/andela/ah-backend-thanos.svg?branch=develop)](https://travis-ci.org/andela/ah-backend-thanos)
+
 [![Coverage Status](https://coveralls.io/repos/github/andela/ah-backend-thanos/badge.svg?branch=develop)](https://coveralls.io/github/andela/ah-backend-thanos?branch=develop)
 
 

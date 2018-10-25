@@ -1,18 +1,19 @@
 language: python
 python:
-    - "3.7"
+    - "3.7-dev"
 services:
   - postgresql
-
-env:
-  - DJANGO=2.1
 
 install:
     - pip install -r requirements.txt
 
-script:
-    - python manage.py test
-    - coverage run manage.py test 
+before_script:
+    - psql -c "create database ahdatabase;" -U postgres
+    - python manage.py makemigrations
+    - python manage.py migrate
     
+script:
+    - coverage run --source='.' manage.py test
+          
 after_success:
     - coveralls

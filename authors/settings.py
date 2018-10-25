@@ -32,6 +32,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='.herokuapp.com', cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
+    'django_nose',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +48,14 @@ INSTALLED_APPS = [
     'authors.apps.core',
     'authors.apps.profiles',
     'rest_framework_swagger'
+]
+
+TEST_RUNNER ='django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=authors',
+    '--cover-tests',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +91,7 @@ WSGI_APPLICATION = 'authors.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+
 
 DATABASES = {
     'default': {

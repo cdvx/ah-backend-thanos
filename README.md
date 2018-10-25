@@ -1,5 +1,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/andela/ah-backend-thanos/badge.svg?branch=develop)](https://coveralls.io/github/andela/ah-backend-thanos?branch=develop)
 
+
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/2bc2a887886c0fcc355a/maintainability)](https://codeclimate.com/github/andela/ah-backend-thanos/maintainability)
+
 Authors Haven - A Social platform for the creative at heart.
 =======
 

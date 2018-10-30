@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import generics
 
 from .renderers import UserJSONRenderer
 from .serializers import (
@@ -10,8 +10,11 @@ from .serializers import (
 )
 
 
-class RegistrationAPIView(APIView):
-    # Allow any user (authenticated or not) to hit this endpoint.
+class RegistrationAPIView(generics.CreateAPIView):
+    """
+    post:
+    Register a user.
+    """
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
     serializer_class = RegistrationSerializer
@@ -29,7 +32,11 @@ class RegistrationAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class LoginAPIView(APIView):
+class LoginAPIView(generics.CreateAPIView):
+    """
+        post:
+        Login a user.
+    """
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
     serializer_class = LoginSerializer

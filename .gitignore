@@ -95,3 +95,6 @@ db.sqlite3
 
 #VSCode hidden folder
 .vscode/
+
+# migrations
+*/migrations/*

@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/andela/ah-backend-thanos.svg?branch=https://travis-ci.org/andela/ah-backend-thanos.svg?branch=ch-update-TravisCI-%23161348747)](https://travis-ci.org/andela/ah-backend-thanos)
+[![Build Status](https://travis-ci.org/andela/ah-backend-thanos.svg?branch=https://travis-ci.org/andela/ah-backend-thanos.svg?branch=develop)](https://travis-ci.org/andela/ah-backend-thanos)
 [![Coverage Status](https://coveralls.io/repos/github/andela/ah-backend-thanos/badge.svg)](https://coveralls.io/github/andela/ah-backend-thanos)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2bc2a887886c0fcc355a/maintainability)](https://codeclimate.com/github/andela/ah-backend-thanos/maintainability)
 
@@ -50,6 +50,14 @@ The website serves as a blog where persons write and read  articles
 `DB_HOST= db_host`
 
 `ALLOWED_HOSTS= .localhost, .herokuapp.com`
+
+`EMAIL_HOST = email_host`
+
+`EMAIL_HOST_USER= email_host_user`
+
+`EMAIL_HOST_PASSWORD = email_host_password`
+
+`EMAIL_PORT = email_port`
 
 - Change the SECRET_KEY to the project secret key.
 

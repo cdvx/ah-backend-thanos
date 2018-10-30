@@ -117,4 +117,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         return self.username
 
+    def _generate_jwt_token(self):
+        """
+        Generates the token that stores the user's id
+        It also expires in 5 days
+        """
+        date = datetime.now() + timedelta(days=2)
+        token = jwt.encode({
+            'id' : self.pk,
+            'username' : self.username,
+            'email' : self.email,
+            'exp' : int(date.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+
+        return token.decode('utf-8')
+
+    @property
+    def token(self):
+        """
+        This function allows us to generate the user token as `user.token` through 
+        calling the token as a "dynamic property" when we add the `@property`
+        """
+        return self._generate_jwt_token()
 

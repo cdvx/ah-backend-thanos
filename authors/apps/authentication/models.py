@@ -70,6 +70,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # but we can still analyze the data.
     is_active = models.BooleanField(default=True)
 
+    # An Email with an Activation link is sent to a user upon succesfull registration.
+    # When a user clicks on that link, it activates his/her setting the `is_verified` to true.
+    is_verified = models.BooleanField(default=False)
+
     # The `is_staff` flag is expected by Django to determine who can and cannot
     # log into the Django admin site. For most users, this flag will always be
     # falsed.

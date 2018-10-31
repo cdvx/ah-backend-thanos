@@ -16,13 +16,25 @@ Including another URLconf
 from django.urls import include, path, re_path
 from django.contrib import admin
 from rest_framework_swagger.views import get_swagger_view
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
-schema_view = get_swagger_view(title="Author's Haven REST API")
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Author's Haven REST API",
+      default_version='v1',
+      description="A platform for passionate writers and readers",
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/', include(('authors.apps.authentication.urls', 'authors.apps.authentication'), namespace='authentication')),
-    path('', schema_view),
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/articles', include(('authors.apps.articles.urls', 'authors.apps.articles'), namespace='articles')),
 ]
-

@@ -98,3 +98,7 @@ db.sqlite3
 
 # migrations
 */migrations/*
+
+# System files
+.DS_Store
+**/.DS_Store

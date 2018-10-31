@@ -54,10 +54,11 @@ INSTALLED_APPS = [
     'authors.apps.authentication',
     'authors.apps.core',
     'authors.apps.profiles',
-    'rest_framework_swagger'
+    'drf_yasg',
+    'authors.apps.articles',
 ]
 
-TEST_RUNNER ='django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--with-coverage',
@@ -167,5 +168,16 @@ REST_FRAMEWORK = {
     ),
 }
 
-django_heroku.settings(locals())
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+    'DOC_EXPANSION': 'none',
+    'DEFAULT_MODEL_RENDERING': 'example'
+}
 
+django_heroku.settings(locals())

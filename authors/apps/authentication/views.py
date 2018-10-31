@@ -43,7 +43,7 @@ class RegistrationAPIView(generics.CreateAPIView):
         message = """
             Hi {},
             Please click on the link to confirm your registration,
-            {}://{}/api/activate/{}/{}
+            {}://{}/api/users/activate/{}/{}
         """.format(user.username,request.scheme, request.get_host(), uid, activation_token)
 
         send_mail(mail_subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
@@ -104,25 +104,27 @@ class AccountVerificationAPIView(generics.GenericAPIView):
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
 
-    def get(self, request, uidb64, token):
+    def get(self, request, uidb64, activation_token):
         try:
             email = force_text(urlsafe_base64_decode(uidb64))
             user = User.objects.get(email=email)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
-        
-        if user is not None and default_token_generator.check_token(user, token):
+
+        if user is not None and default_token_generator.check_token(user, activation_token):
 
             if user.is_verified == True:
-                message ={"message":'Your account is already verified, Please login.'}
+                message = {
+                    "message": 'Your account is already verified, Please login.'}
                 return Response(message, status=status.HTTP_200_OK)
-            
+
             user.is_verified = True
             user.save()
-            message = {"message":'Thank you for your email confirmation. Now you can login your account.'}
+            message = {
+                "message": 'Thank you for your email confirmation. Now you can login your account.'}
             return Response(message, status=status.HTTP_200_OK)
-       
-        return Response({"error":'Activation link is invalid or expired !!'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"error": 'Activation link is invalid or expired !!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

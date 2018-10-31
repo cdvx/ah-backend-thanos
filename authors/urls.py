@@ -22,19 +22,25 @@ from drf_yasg import openapi
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Author's Haven REST API",
-      default_version='v1',
-      description="A platform for passionate writers and readers",
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="Author's Haven REST API",
+        default_version='v1',
+        description="A platform for passionate writers and readers",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('api/', include(('authors.apps.authentication.urls', 'authors.apps.authentication'), namespace='authentication')),
-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/articles', include(('authors.apps.articles.urls', 'authors.apps.articles'), namespace='articles')),
+    path('api/', include(('authors.apps.authentication.urls',
+                          'authors.apps.authentication'), namespace='authentication')),
+    path('', schema_view.with_ui('swagger', cache_timeout=0),
+         name='schema-swagger-ui'),
+    path('api/articles', include(('authors.apps.articles.urls',
+                                  'authors.apps.articles'), namespace='articles')),
+    path('', include(('authors.apps.profiles.urls',
+                      'authors.apps.profiles'), namespace='profiles')),
+
 ]

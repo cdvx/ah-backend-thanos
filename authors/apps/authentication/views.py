@@ -10,13 +10,15 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
+
 from .renderers import UserJSONRenderer
 from .serializers import (
     LoginSerializer, RegistrationSerializer, UserSerializer
 )
 
-
 User = get_user_model()
+
+
 class RegistrationAPIView(generics.CreateAPIView):
     """
     post:
@@ -38,15 +40,16 @@ class RegistrationAPIView(generics.CreateAPIView):
         user = User.objects.get(email=user["email"])
         uid = force_text(urlsafe_base64_encode(user.email.encode("utf8")))
         activation_token = default_token_generator.make_token(user)
-        
+
         mail_subject = 'Activate your Authors Haven account.'
         message = """
             Hi {},
             Please click on the link to confirm your registration,
             {}://{}/api/users/activate/{}/{}
-        """.format(user.username,request.scheme, request.get_host(), uid, activation_token)
+        """.format(user.username, request.scheme, request.get_host(), uid, activation_token)
 
-        send_mail(mail_subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
+        send_mail(mail_subject, message, settings.DEFAULT_FROM_EMAIL,
+                  [user.email], fail_silently=False)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -73,31 +76,31 @@ class LoginAPIView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-    permission_classes = (IsAuthenticated,)
-    renderer_classes = (UserJSONRenderer,)
-    serializer_class = UserSerializer
+# class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+#     permission_classes = (IsAuthenticated,)
+#     renderer_classes = (UserJSONRenderer,)
+#     serializer_class = UserSerializer
 
-    def retrieve(self, request, *args, **kwargs):
-        # There is nothing to validate or save here. Instead, we just want the
-        # serializer to handle turning our `User` object into something that
-        # can be JSONified and sent to the client.
-        serializer = self.serializer_class(request.user)
+#     def retrieve(self, request, *args, **kwargs):
+#         # There is nothing to validate or save here. Instead, we just want the
+#         # serializer to handle turning our `User` object into something that
+#         # can be JSONified and sent to the client.
+#         serializer = self.serializer_class(request.user)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, *args, **kwargs):
-        serializer_data = request.data.get('user', {})
+#     def update(self, request, *args, **kwargs):
+#         serializer_data = request.data.get('user', {})
 
-        # Here is that serialize, validate, save pattern we talked about
-        # before.
-        serializer = self.serializer_class(
-            request.user, data=serializer_data, partial=True
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+#         # Here is that serialize, validate, save pattern we talked about
+#         # before.
+#         serializer = self.serializer_class(
+#             request.user, data=serializer_data, partial=True
+#         )
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class AccountVerificationAPIView(generics.GenericAPIView):
@@ -125,6 +128,4 @@ class AccountVerificationAPIView(generics.GenericAPIView):
             return Response(message, status=status.HTTP_200_OK)
 
         return Response({"error": 'Activation link is invalid or expired !!'}, status=status.HTTP_400_BAD_REQUEST)
-
-
 

@@ -3,6 +3,8 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from rest_framework.reverse import reverse
 
+from ...profiles.models import Profile
+
 User = get_user_model()
 signup_url = reverse("authentication:signup")
 
@@ -52,6 +54,23 @@ class UserApiTestCase(APITestCase):
             }
         }
 
+        self.no_fields = {
+            "user": {
+                "username": "",
+                "email": "",
+                "password": "judesecret"
+            }
+        }
+        self.profile_data = {
+            "profiles": {
+                "username": "bruce",
+                "bio": "this is a test user",
+                "image": "",
+                "last_name": "",
+                "first_name": ""
+            }
+        }
+
     def test_register_user(self):
         self.response = self.client.post(
             signup_url, self.user_data, format="json")
@@ -93,3 +112,34 @@ class UserApiTestCase(APITestCase):
         self.assertEqual(self.response.status_code,
                          status.HTTP_400_BAD_REQUEST)
 
+    def test_user_has_filled_in_Fields(self):
+        self.response = self.client.post(
+            signup_url, self.no_fields, format="json")
+        self.assertEqual(self.response.status_code,
+                         status.HTTP_400_BAD_REQUEST)
+        self.assertIn('This field may not be blank.',
+                      self.response.data["errors"]["username"])
+
+    def test_get_short_name(self):
+        """ Test model method to get username """
+        profile = Profile()
+        self.user = User.objects.create_user(
+            username="jude", email="jude@gmail.com", password="jude#1",
+            profile=profile)
+        short_name = self.user.get_short_name()
+        self.assertEqual(short_name, "jude")
+
+    def test_get_full_name(self):
+        """ Test property to get username """
+        profile = Profile()
+        self.user = User.objects.create_user(
+            username="jude", email="jude@gmail.com", password="jude#1",
+            profile=profile)
+        full_name = self.user.get_full_name
+        self.assertEqual(full_name, "jude")
+
+    def test_registration_of_super_user(self):
+        """Test that user can be registered as a super user"""
+        self.assertRaises(TypeError, lambda: User.objects.create_superuser(
+            username="superuser",
+            email="superuser@gmail.com", password=None))

@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/andela/ah-backend-thanos.svg?branch=https://travis-ci.org/andela/ah-backend-thanos.svg?branch=develop)](https://travis-ci.org/andela/ah-backend-thanos)
+[![Build Status](https://travis-ci.org/andela/ah-backend-thanos.svg?branch=develop)](https://travis-ci.org/andela/ah-backend-thanos)
 [![Coverage Status](https://coveralls.io/repos/github/andela/ah-backend-thanos/badge.svg)](https://coveralls.io/github/andela/ah-backend-thanos)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2bc2a887886c0fcc355a/maintainability)](https://codeclimate.com/github/andela/ah-backend-thanos/maintainability)
 

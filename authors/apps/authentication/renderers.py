@@ -13,7 +13,7 @@ class UserJSONRenderer(JSONRenderer):
         # check for this case.
         errors = data.get('errors', None)
 
-        #Here we get the token
+        # Here we get the token
         token = data.get('token', None)
 
         if errors is not None:
@@ -22,12 +22,11 @@ class UserJSONRenderer(JSONRenderer):
             return super(UserJSONRenderer, self).render(data)
 
         if token is not None and isinstance(token, bytes):
-            #we receive the token in byte format so we need
-            #to decode it to make it easily serializable
+            # we receive the token in byte format so we need
+            # to decode it to make it easily serializable
             data['token'] = token.decode('utf-8')
 
         # Finally, we can render our data under the "user" namespace.
         return json.dumps({
             'user': data
         })
-

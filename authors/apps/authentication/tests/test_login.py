@@ -1,10 +1,12 @@
 from rest_framework.test import APITestCase
-from rest_framework import status
+from rest_framework import status, exceptions
 from django.contrib.auth import get_user_model
 from rest_framework.reverse import reverse
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+
+from ..backends import JWTAuthentication
 
 User = get_user_model()
 signup_url = reverse("authentication:signup")
@@ -51,3 +53,8 @@ class UserApiTestCase(APITestCase):
                                        "token": login_token}
         )
 
+    def test_get_user_email(self):
+        self.user = self.login_data["user"]["email"]
+        """ Test model method to get user's email """
+        email = self.user.__str__()
+        self.assertEqual(email, "judeinno@test.com")

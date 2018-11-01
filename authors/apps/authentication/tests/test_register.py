@@ -1,4 +1,3 @@
-from rest_framework.test import APITestCase
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from rest_framework.reverse import reverse
@@ -7,73 +6,21 @@ from ...profiles.models import Profile
 
 User = get_user_model()
 signup_url = reverse("authentication:signup")
+from .basetest import BaseTestCase
 
-
-class UserApiTestCase(APITestCase):
-    def setUp(self):
-        self.user_data = {
+class UserApiTestCase(BaseTestCase):
+   
+    def test_register_user(self):
+        self.response = self.client.post(
+            signup_url, 
+            data = {
             "user": {
-                "email": "daniel@test.com",
-                "username": "daniel",
+                "email": "judeinno@gmail.com",
+                "username": "rachel",
                 "password": "testpassword#123"
             }
         }
-        self.invalid_email_data = {
-            "user": {
-                "email": "test@testcom",
-                "username": "testuser",
-                "password": "testpassword1"
-            }
-        }
-        self.invalid_username = {
-            "user": {
-                "email": "test@test.com",
-                "username": "<@#!$%^$^",
-                "password": "testpassword"
-            }
-        }
-        self.invalid_pass_data = {
-            "user": {
-                "email": "test@test.com",
-                "username": "testuser",
-                "password": "123345678"
-            }
-        }
-        self.pass_less8_data = {
-            "user": {
-                "email": "test@test.com",
-                "username": "testuser",
-                "password": "12345l",
-            }
-        }
-        self.alp_pass_data = {
-            "user": {
-                "username": "jude",
-                "email": "jude@mail.com",
-                "password": "judesecret"
-            }
-        }
-
-        self.no_fields = {
-            "user": {
-                "username": "",
-                "email": "",
-                "password": "judesecret"
-            }
-        }
-        self.profile_data = {
-            "profiles": {
-                "username": "bruce",
-                "bio": "this is a test user",
-                "image": "",
-                "last_name": "",
-                "first_name": ""
-            }
-        }
-
-    def test_register_user(self):
-        self.response = self.client.post(
-            signup_url, self.user_data, format="json")
+        , format="json")
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 
     def test_invalid_email(self):

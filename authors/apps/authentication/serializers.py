@@ -164,3 +164,16 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    new_password = serializers.CharField(required=True)
+    confirm_password = serializers.CharField(required=True)
+
+class SendPasswordResetEmailSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint to send email.
+    """
+    email = serializers.CharField(max_length=255)

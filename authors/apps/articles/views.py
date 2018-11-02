@@ -1,17 +1,19 @@
 import re
 import time
 import jwt
+
 from django.conf import settings
 from rest_framework import status
 from rest_framework import generics
 from rest_framework import permissions
-from authors.apps.authentication.backends import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
+
 from .models import Article
 from .renderers import ArticleRenderer
 from .serializers import ArticleSerializer
 from authors.apps.authentication.models import User
+from authors.apps.authentication.backends import JWTAuthentication
 
 
 class ArticlesListCreateAPIView(generics.ListCreateAPIView):
@@ -38,7 +40,7 @@ class ArticlesListCreateAPIView(generics.ListCreateAPIView):
         except Exception as exception:
             raise APIException({
                 "error": "Login Token required. System Error Response: " + str(exception)
-                })
+            })
 
         # create a slug from the title (allowing only alphanumeric values and dashes for spaces)
         slug = ''
